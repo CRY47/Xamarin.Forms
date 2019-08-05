@@ -31,6 +31,13 @@ namespace Xamarin.Forms.Platform.Android
 
 		SpannableString _spannableString;
 
+        protected Boolean IsDisposed()
+        {
+            if (this.Control.Handle == null) { return true; }
+            if (this.Control.Handle == IntPtr.Zero) { return true; }
+            return false;
+        }
+
 		public LabelRenderer(Context context) : base(context)
 		{
 			AutoPackage = false;
@@ -144,6 +151,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
+            if (IsDisposed()) { return; }
 			base.OnElementPropertyChanged(sender, e);
 
 			if (e.PropertyName == Label.HorizontalTextAlignmentProperty.PropertyName || e.PropertyName == Label.VerticalTextAlignmentProperty.PropertyName)
