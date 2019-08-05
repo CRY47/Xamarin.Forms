@@ -13,6 +13,13 @@ namespace Xamarin.Forms.Platform.Android
 
 		readonly MotionEventHelper _motionEventHelper = new MotionEventHelper();
 
+        protected Boolean IsDisposed()
+        {
+            if (this.Handle == null) { return true; }
+            if (this.Handle == IntPtr.Zero) { return true; }
+            return false;
+        }
+
 		public BoxRenderer(Context context) : base(context)
 		{
 			AutoPackage = false;
@@ -45,6 +52,7 @@ namespace Xamarin.Forms.Platform.Android
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
+            if (IsDisposed()) { return; }
 			base.OnElementPropertyChanged(sender, e);
 
 			if (e.PropertyName == BoxView.ColorProperty.PropertyName || e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
